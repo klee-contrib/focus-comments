@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack.js --config ./webpack.config.js",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "test": "node ./node_modules/mocha/bin/mocha src/**/__tests__/**/*.js"
   },
   "repository": {
     "type": "git",
