@@ -49,6 +49,8 @@ for (let i = 0; i < commentsCount; i++) {
         authorDisplayName: faker.name.findName()
     });
 }
+const myId = faker.random.number();
+const myDisplayName = faker.name.findName();
 
 // Middlewares
 
@@ -70,6 +72,11 @@ app.get(API_ROOT + '/api/comments', function getComments(req, res) {
 
 app.post(API_ROOT + '/api/comments', function publishComment(req, res) {
     const comment = req.body;
+    comment.uuid = faker.random.uuid();
+    comment.creationDate = new Date();
+    comment.lastModified = new Date();
+    comment.author = myId;
+    comment.authorDisplayName = myDisplayName;
     comments.push(comment);
     res.end();
 });
@@ -80,6 +87,7 @@ app.put(API_ROOT + '/api/comments/:uuid', function updateComment(req, res) {
         if (comment.uuid === uuid) {
             comment = req.body;
             comment.uuid = uuid;
+            comment.lastModified = new Date();
         }
         return comment;
     });
