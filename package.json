@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack.js --config ./webpack.config.js",
-    "start": "node ./index.js",
+    "start": "node ./server.js",
     "test": "node ./node_modules/mocha/bin/mocha src/**/__tests__/**/*.js"
   },
   "repository": {
@@ -56,6 +56,7 @@
     "jsdom": "^6.5.1",
     "json-loader": "^0.5.2",
     "mocha": "^2.3.0",
+    "nock": "^2.17.0",
     "node-sass": "^3.3.3",
     "react-addons-test-utils": "^0.14.0",
     "react-hot-loader": "^1.2.7",
