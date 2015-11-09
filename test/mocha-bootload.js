@@ -1,8 +1,3 @@
-// Global configuration uese for tests.
-require('babel/register')({
-    optional: ['runtime', 'es7.asyncFunctions']
-});
-
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');

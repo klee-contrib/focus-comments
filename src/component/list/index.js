@@ -15,8 +15,8 @@ const propTypes = {
 
 class List extends Component {
     componentWillMount() {
-        const {dispatch, concept, conceptId} = this.props;
-        dispatch(getComments(concept, conceptId));
+        const {dispatch, apiRootUrl, concept, conceptId} = this.props;
+        dispatch(getComments(concept, conceptId, apiRootUrl));
     }
 
     render() {

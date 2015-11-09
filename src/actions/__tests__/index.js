@@ -5,6 +5,7 @@ import nock from 'nock';
 import {SEND_COMMENT, RECEIVE_COMMENT_CONFIRMATION, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../';
 
 const middlewares = [thunk];
+const HOST = 'http://localhost/x/comment';
 
 /**
 * Creates a mock of Redux store with middleware.
@@ -53,7 +54,7 @@ describe('Async actions', () => {
     });
     const comments = ['mocked comment number 1', 'mocker comment number 2'];
     it('create SEND_COMMENT and RECEIVE_COMMENT_CONFIRMATION when adding a new comment', done => {
-        nock('http://localhost')
+        nock(HOST)
         .post('/api/comments')
         .query({concept: 'concept', id: 'conceptId'})
         .reply(200);
@@ -63,10 +64,10 @@ describe('Async actions', () => {
             { type: RECEIVE_COMMENT_CONFIRMATION}
         ]
         const store = mockStore({}, expectedActions, done);
-        store.dispatch(addComment('concept', 'conceptId', 'message'));
+        store.dispatch(addComment('concept', 'conceptId', 'message', HOST));
     });
     it('create SEND_COMMENT and RECEIVE_COMMENT_CONFIRMATION when updating a comment', done => {
-        nock('http://localhost')
+        nock(HOST)
         .put('/api/comments/uuid')
         .reply(200);
 
@@ -75,6 +76,6 @@ describe('Async actions', () => {
             { type: RECEIVE_COMMENT_CONFIRMATION}
         ]
         const store = mockStore({}, expectedActions, done);
-        store.dispatch(updateComment({uuid: 'uuid'}, 'message'));
+        store.dispatch(updateComment({uuid: 'uuid'}, 'message', HOST));
     });
 });
