@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 
 // TODO : replace the configuration
 const CONFIGURATION = {
-    host: 'http://localhost'
+    host: 'http://localhost:9090/x/comment'
 }
 
 // Single comment actions
