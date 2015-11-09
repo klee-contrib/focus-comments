@@ -1,31 +1,26 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {getComments} from '../actions';
+import List from './list';
+
+const propTypes = {
+    apiRootUrl: PropTypes.string.isRequired,
+    concept: PropTypes.string.isRequired,
+    conceptId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+}
 
 class Container extends Component {
     render() {
-        const {comments, dispatch, isLoading} = this.props;
+        const {comments, dispatch, isLoading, ...otherProps} = this.props;
         return (
-            <div>
-                <ul>
-                    {comments.map(({msg}, idx) => {
-                        return (
-                            <li key={idx}>{msg}</li>
-                        );
-                    })}
-                </ul>
-                <button onClick={() => {dispatch(getComments('concept', 'id'));}}>Manually get the comments</button>
-                {isLoading && <p>Loading the comments...</p>}
-            </div>
-        )
+            <List comments={comments} dispatch={dispatch} {...otherProps}/>
+        );
     }
 }
 
-const select = state => {
-    return {
-        comments: state.comments,
-        isLoading: state.isLoading
-    };
+Container.propTypes = propTypes;
+
+const select = ({comments, isLoading, isPosting, lastUpdate}) => {
+    return {comments, isLoading, isPosting, lastUpdate};
 }
 
 export default connect(select)(Container);
