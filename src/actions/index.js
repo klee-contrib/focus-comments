@@ -1,25 +1,14 @@
 import fetch from 'isomorphic-fetch';
 
-// TODO : replace the configuration
-const CONFIGURATION = {
-    host: 'http://localhost:9090/x/comment'
-}
-
 // Single comment actions
 export const SEND_COMMENT = 'SEND_COMMENT';
-export const RECEIVE_COMMENT_CONFIRMATION = 'RECEIVE_COMMENT_CONFIRMATION';
 
 const sendComment = () => {
     return {
         type: SEND_COMMENT
     }
 }
-const receiveCommentConfirmation = () => {
-    return {
-        type: RECEIVE_COMMENT_CONFIRMATION
-    }
-}
-export const addComment = (concept, conceptId, message, host) => {
+export const addComment = (concept, conceptId, message, host, date = new Date()) => {
     return dispatch => {
         dispatch(sendComment());
         const comment = {
@@ -27,11 +16,18 @@ export const addComment = (concept, conceptId, message, host) => {
             creationDate: new Date(),
             lastModified: new Date()
         }
-        return fetch(`${host}/api/comments?concept=${concept}&id=${conceptId}`, {method: 'POST', body: comment})
-        .then(() => dispatch(receiveCommentConfirmation()));
+        return fetch(`${host}/api/comments?concept=${concept}&id=${conceptId}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(comment)
+        })
+        .then(() => dispatch(getComments(concept, conceptId, host, date)));
     }
 }
-export const updateComment = (comment, message, host) => {
+export const updateComment = (concept, conceptId, comment, message, host, date = new Date()) => {
     return dispatch => {
         dispatch(sendComment());
         const newComment = {
@@ -39,8 +35,15 @@ export const updateComment = (comment, message, host) => {
             msg: message,
             lastModified: new Date()
         }
-        return fetch(`${host}/api/comments/${comment.uuid}`, {method: 'PUT', body: comment})
-        .then(() => dispatch(receiveCommentConfirmation()));
+        return fetch(`${host}/api/comments/${comment.uuid}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(comment)
+        })
+        .then(() => dispatch(getComments(concept, conceptId, host, date)));
     }
 }
 
@@ -56,14 +59,15 @@ const requestComments = () => {
 const receiveComments = (comments, lastUpdate) => {
     return {
         type: RECEIVE_COMMENTS,
-        comments, lastUpdate
+        comments,
+        lastUpdate
     }
 }
-export const getComments = (concept, conceptId, host) => {
+export const getComments = (concept, conceptId, host, date = new Date()) => {
     return dispatch => {
         dispatch(requestComments());
         return fetch(`${host}/api/comments?concept=${concept}&id=${conceptId}`)
         .then(response => response.json())
-        .then(comments => dispatch(receiveComments(comments, new Date())));
+        .then(comments => dispatch(receiveComments(comments, date)));
     }
 }
