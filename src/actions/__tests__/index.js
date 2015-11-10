@@ -2,10 +2,14 @@ import {addComment, updateComment, getComments} from '../';
 import {applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import nock from 'nock';
-import {SEND_COMMENT, RECEIVE_COMMENT_CONFIRMATION, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../';
+import {SEND_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../';
 
 const middlewares = [thunk];
 const HOST = 'http://localhost/x/comment';
+const now = new Date();
+const concept = 'concept';
+const conceptId = 'conceptId';
+const comments = ['mocked comment number 1', 'mocker comment number 2'];
 
 /**
 * Creates a mock of Redux store with middleware.
@@ -52,30 +56,50 @@ describe('Async actions', () => {
     afterEach(() => {
         nock.cleanAll()
     });
-    const comments = ['mocked comment number 1', 'mocker comment number 2'];
-    it('create SEND_COMMENT and RECEIVE_COMMENT_CONFIRMATION when adding a new comment', done => {
+    it('should create SEND_COMMENT, REQUEST_COMMENTS and RECEIVE_COMMENTS when adding a new comment', done => {
         nock(HOST)
         .post('/api/comments')
-        .query({concept: 'concept', id: 'conceptId'})
-        .reply(200);
+        .query({concept, id: conceptId})
+        .reply(200)
+        .get('/api/comments')
+        .query({concept, id: conceptId})
+        .reply(200, comments);
 
         const expectedActions = [
-            { type: SEND_COMMENT },
-            { type: RECEIVE_COMMENT_CONFIRMATION}
-        ]
+            {type: SEND_COMMENT},
+            {type: REQUEST_COMMENTS},
+            {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
+        ];
         const store = mockStore({}, expectedActions, done);
-        store.dispatch(addComment('concept', 'conceptId', 'message', HOST));
+        store.dispatch(addComment(concept, conceptId, 'message', HOST, now));
     });
-    it('create SEND_COMMENT and RECEIVE_COMMENT_CONFIRMATION when updating a comment', done => {
+    it('should create SEND_COMMENT, REQUEST_COMMENTS and RECEIVE_COMMENTS when updating a comment', done => {
         nock(HOST)
         .put('/api/comments/uuid')
-        .reply(200);
+        .reply(200)
+        .get('/api/comments')
+        .query({concept, id: conceptId})
+        .reply(200, comments);
 
         const expectedActions = [
-            { type: SEND_COMMENT },
-            { type: RECEIVE_COMMENT_CONFIRMATION}
+            {type: SEND_COMMENT},
+            {type: REQUEST_COMMENTS},
+            {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
         ]
         const store = mockStore({}, expectedActions, done);
-        store.dispatch(updateComment({uuid: 'uuid'}, 'message', HOST));
+        store.dispatch(updateComment(concept, conceptId, {uuid: 'uuid'}, 'message', HOST, now));
+    });
+    it('should create REQUEST_COMMENTS and RECEIVE_COMMENTS when getting the comments', done => {
+        nock(HOST)
+        .get('/api/comments')
+        .query({concept, id: conceptId})
+        .reply(200, comments);
+
+        const expectedActions = [
+            {type: REQUEST_COMMENTS},
+            {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
+        ]
+        const store = mockStore({}, expectedActions, done);
+        store.dispatch(getComments(concept, conceptId, HOST, now));
     });
 });

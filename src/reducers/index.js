@@ -12,20 +12,11 @@ const comments = (state = [], action) => {
 
 const isLoading = (state = false, action) => {
     switch (action.type) {
+        case SEND_COMMENT:
+            return true;
         case REQUEST_COMMENTS:
             return true;
         case RECEIVE_COMMENTS:
-            return false;
-        default:
-            return state;
-    }
-}
-
-const isPosting = (state = false, action) => {
-    switch (action.type) {
-        case SEND_COMMENT:
-            return true;
-        case RECEIVE_COMMENT_CONFIRMATION:
             return false;
         default:
             return state;
@@ -43,7 +34,6 @@ const lastUpdate = (state = null, action) => {
 
 export default combineReducers({
     isLoading,
-    isPosting,
     lastUpdate,
     comments
 });

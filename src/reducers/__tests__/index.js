@@ -1,9 +1,8 @@
 import reducer from '../';
-import {SEND_COMMENT, RECEIVE_COMMENT_CONFIRMATION, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../../actions';
+import {SEND_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../../actions';
 
 const initialState = {
     isLoading: false,
-    isPosting: false,
     lastUpdate: null,
     comments: []
 };
@@ -16,13 +15,7 @@ describe('The reducer', () => {
     it('should handle SEND_COMMENT', () => {
         expect(reducer(initialState, {
             type: SEND_COMMENT
-        })).to.deep.equal({...initialState, isPosting: true});
-    });
-
-    it('should handle RECEIVE_COMMENT_CONFIRMATION', () => {
-        expect(reducer({...initialState, isPosting: true}, {
-            type: RECEIVE_COMMENT_CONFIRMATION
-        })).to.deep.equal(initialState);
+        })).to.deep.equal({...initialState, isLoading: true});
     });
 
     it('should handle REQUEST_COMMENTS', () => {
