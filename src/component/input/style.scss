@@ -1,0 +1,6 @@
+[data-focus='comment-input'] {
+    display: flex;
+    [data-focus='input'] {
+        flex: 1;
+    }
+}

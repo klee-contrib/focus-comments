@@ -1,0 +1,9 @@
+div.comments {
+    display: flex;
+    justify-content: center;
+    background-color: grey;
+    min-height: 100vh;
+    [data-focus='comments-extension'] {
+        width: 60vw;
+    }
+}

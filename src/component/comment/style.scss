@@ -1,0 +1,22 @@
+[data-focus='comment'] {
+    display: flex;
+    background-color: white;
+    [data-focus='avatar'] {
+
+    }
+    [data-focus='content'] {
+        flex: 1;
+        [data-focus='head'] {
+            display: flex;
+            [data-focus='name'] {
+                flex: 1;
+            }
+            [data-focus='date'] {
+
+            }
+        }
+        [data-focus='body'] {
+
+        }
+    }
+}
