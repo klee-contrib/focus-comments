@@ -2,7 +2,7 @@ import {addComment, updateComment, getComments} from '../';
 import {applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import nock from 'nock';
-import {ADD_COMMENT, UPDATE_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../';
+import {ADD_COMMENT, UPDATE_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS, CLEAR_ERROR} from '../';
 
 const middlewares = [thunk];
 const HOST = 'http://localhost/x/comment';
@@ -66,7 +66,9 @@ describe('Async actions', () => {
         .reply(200, comments);
 
         const expectedActions = [
+            {type: CLEAR_ERROR},
             {type: ADD_COMMENT, message: 'message'},
+            {type: CLEAR_ERROR},
             {type: REQUEST_COMMENTS},
             {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
         ];
@@ -82,7 +84,9 @@ describe('Async actions', () => {
         .reply(200, comments);
 
         const expectedActions = [
+            {type: CLEAR_ERROR},
             {type: UPDATE_COMMENT},
+            {type: CLEAR_ERROR},
             {type: REQUEST_COMMENTS},
             {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
         ];
@@ -96,6 +100,7 @@ describe('Async actions', () => {
         .reply(200, comments);
 
         const expectedActions = [
+            {type: CLEAR_ERROR},
             {type: REQUEST_COMMENTS},
             {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
         ]
