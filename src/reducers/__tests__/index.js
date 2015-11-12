@@ -1,5 +1,5 @@
 import reducer from '../';
-import {SEND_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../../actions';
+import {ADD_COMMENT, UPDATE_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../../actions';
 
 const initialState = {
     isLoading: false,
@@ -12,9 +12,15 @@ describe('The reducer', () => {
         expect(reducer(undefined, {})).to.deep.equal(initialState);
     });
 
-    it('should handle SEND_COMMENT', () => {
+    it('should handle ADD_COMMENT', () => {
         expect(reducer(initialState, {
-            type: SEND_COMMENT
+            type: ADD_COMMENT
+        })).to.deep.equal({...initialState, isLoading: true});
+    });
+
+    it('should handle UPDATE_COMMENT', () => {
+        expect(reducer(initialState, {
+            type: UPDATE_COMMENT
         })).to.deep.equal({...initialState, isLoading: true});
     });
 

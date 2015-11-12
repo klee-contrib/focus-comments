@@ -2,7 +2,7 @@ import {addComment, updateComment, getComments} from '../';
 import {applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import nock from 'nock';
-import {SEND_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../';
+import {ADD_COMMENT, UPDATE_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '../';
 
 const middlewares = [thunk];
 const HOST = 'http://localhost/x/comment';
@@ -56,7 +56,7 @@ describe('Async actions', () => {
     afterEach(() => {
         nock.cleanAll()
     });
-    it('should create SEND_COMMENT, REQUEST_COMMENTS and RECEIVE_COMMENTS when adding a new comment', done => {
+    it('should create ADD_COMMENT, REQUEST_COMMENTS and RECEIVE_COMMENTS when adding a new comment', done => {
         nock(HOST)
         .post('/api/comments')
         .query({concept, id: conceptId})
@@ -66,14 +66,14 @@ describe('Async actions', () => {
         .reply(200, comments);
 
         const expectedActions = [
-            {type: SEND_COMMENT},
+            {type: ADD_COMMENT, message: 'message'},
             {type: REQUEST_COMMENTS},
             {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
         ];
         const store = mockStore({}, expectedActions, done);
         store.dispatch(addComment(concept, conceptId, 'message', HOST, now));
     });
-    it('should create SEND_COMMENT, REQUEST_COMMENTS and RECEIVE_COMMENTS when updating a comment', done => {
+    it.skip('should create UPDATE_COMMENT, REQUEST_COMMENTS and RECEIVE_COMMENTS when updating a comment', done => {
         nock(HOST)
         .put('/api/comments/uuid')
         .reply(200)
@@ -82,10 +82,10 @@ describe('Async actions', () => {
         .reply(200, comments);
 
         const expectedActions = [
-            {type: SEND_COMMENT},
+            {type: UPDATE_COMMENT},
             {type: REQUEST_COMMENTS},
             {type: RECEIVE_COMMENTS, comments, lastUpdate: now}
-        ]
+        ];
         const store = mockStore({}, expectedActions, done);
         store.dispatch(updateComment(concept, conceptId, {uuid: 'uuid'}, 'message', HOST, now));
     });

@@ -1,20 +1,36 @@
 [data-focus='comment'] {
     display: flex;
     background-color: white;
-    [data-focus='avatar'] {
 
+    &:hover {
+        [data-focus='content'] [data-focus='head'] [data-focus='edit'] {
+            display: inline-block;
+        }
     }
+
+    [data-focus='avatar'] {
+        
+    }
+
     [data-focus='content'] {
         flex: 1;
+
         [data-focus='head'] {
             display: flex;
-            [data-focus='name'] {
-                flex: 1;
-            }
-            [data-focus='date'] {
+            justify-content: space-between;
 
+            [data-focus='name'] {
+            }
+
+            [data-focus='edit'] {
+                flex: 1;
+                display: none;
+            }
+
+            [data-focus='date'] {
             }
         }
+
         [data-focus='body'] {
 
         }
