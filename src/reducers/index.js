@@ -27,7 +27,7 @@ const isLoading = (state = false, action) => {
     }
 }
 
-const lastUpdate = (state = null, action) => {
+const lastUpdate = (state = new Date(), action) => {
     switch(action.type) {
         case RECEIVE_COMMENTS:
             return action.lastUpdate;

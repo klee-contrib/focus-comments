@@ -3,7 +3,7 @@ import {ADD_COMMENT, UPDATE_COMMENT, REQUEST_COMMENTS, RECEIVE_COMMENTS} from '.
 
 const initialState = {
     isLoading: false,
-    lastUpdate: null,
+    lastUpdate: new Date(),
     comments: [],
     error: null
 };

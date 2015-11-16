@@ -1,6 +1,15 @@
 [data-focus='comment'] {
     display: flex;
     background-color: white;
+    margin-bottom: 2px;
+    margin-right: 20px;
+    padding: 10px;
+
+    position: relative;
+
+    &[data-editing='true'] {
+        background-color: #f3f4fa;
+    }
 
     &:hover {
         [data-focus='content'] [data-focus='head'] [data-focus='edit'] {
@@ -9,30 +18,64 @@
     }
 
     [data-focus='avatar'] {
-        
+        margin: 5px;
+        width: 70px;
+        min-height: 60px;
+        position: relative;
+
+        i {
+            font-size: 60px;
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #CCC;
+        }
+
+        img {
+            height: 60px;
+            opacity: 0.99;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            -ms-border-radius: 30px;
+            border-radius: 30px;
+        }
+
     }
 
     [data-focus='content'] {
         flex: 1;
-
         [data-focus='head'] {
             display: flex;
             justify-content: space-between;
 
             [data-focus='name'] {
+                margin-bottom: 5px;
+                font-size: 1.1em;
             }
 
             [data-focus='edit'] {
                 flex: 1;
+                margin-left: 10px;
+
+                a {
+                    color: #3f51b5;
+                    cursor: pointer;
+                }
                 display: none;
             }
 
             [data-focus='date'] {
+                color: #AAA;
+                font-size: 0.85em;
             }
         }
 
-        [data-focus='body'] {
-
+        & > .separator {
+            position: absolute;
+            bottom: 5px;
+            width: calc(100% - 100px);
         }
     }
 }

@@ -99,18 +99,18 @@ app.post(API_ROOT + '/api/comments', function publishComment(req, res) {
     res.end();
 });
 
-// app.put(API_ROOT + '/api/comments/:uuid', function updateComment(req, res) {
-//     const uuid = req.params.uuid;
-//     comments = comments.map(function updateComment(comment) {
-//         if (comment.uuid === uuid) {
-//             comment = req.body;
-//             comment.uuid = uuid;
-//             comment.lastModified = new Date();
-//         }
-//         return comment;
-//     });
-//     res.end();
-// });
+app.put(API_ROOT + '/api/comments/:uuid', function updateComment(req, res) {
+    const uuid = req.params.uuid;
+    comments = comments.map(function updateComment(comment) {
+        if (comment.uuid === uuid) {
+            comment = req.body;
+            comment.uuid = uuid;
+            comment.lastModified = new Date();
+        }
+        return comment;
+    });
+    res.end();
+});
 
 app.get('/x/account/api/accounts/:authorId/photo', function getAvatar(req, res) {
     const authorId = req.params.authorId;

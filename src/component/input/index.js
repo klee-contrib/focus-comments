@@ -20,11 +20,11 @@ class Input extends Component {
         }
     }
 
-    componentWillReceiveProps({isPosting}) {
-        if (isPosting !== this.props.isPosting) {
+    componentWillReceiveProps({isLoading}) {
+        if (!isLoading && this.props.isLoading) {
             this.setState({
-                value: null
-            });
+                value: ''
+            }, this.props.scrollToBottom);
         }
     }
 
@@ -51,11 +51,8 @@ class Input extends Component {
         const {texts: {placeholder, send}, isLoading} = this.props;
         return (
             <div data-focus='comment-input'>
-                <div className='mdl-textfield mdl-js-textfield' data-focus='input' ref='textarea'>
-                    <textarea className='mdl-textfield__input' type='text' onChange={this._inputChangeHandler.bind(this)} rows='3' value={value}></textarea>
-                    <label className='mdl-textfield__label'>{placeholder}</label>
-                </div>
-                <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--colored' disabled={isLoading} onClick={this._sendClickHandler.bind(this)}>
+                <textarea type='text' onChange={this._inputChangeHandler.bind(this)} placeholder={placeholder} rows='3' value={value}></textarea>
+                <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--raised' disabled={isLoading} onClick={this._sendClickHandler.bind(this)}>
                     {send}
                 </button>
             </div>

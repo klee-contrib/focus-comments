@@ -18,6 +18,9 @@ focusCommentsConfigBuilder = ENV => ({
     },
     plugins: ENV === 'dev' ? [
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            __DEV__: 'true'
+        }),
         new HtmlWebpackPlugin({
             title: 'Focus comments',
             inject: 'body',

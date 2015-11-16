@@ -4,3 +4,9 @@
     -webkit-animation-name: fadeInRight;
     animation-name: fadeInRight;
 }
+
+[data-focus='comments-list'] {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
