@@ -1,33 +1,19 @@
 "use strict";
 
-const configBuilder = require('./webpack.config').builder;
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
+const webpackConfig = require('./webpack.config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const faker = require('faker');
+const serverLauncher = require('webpack-focus').serverLauncher;
 
-const MOCKED_API_PORT = 9090;
-const WEBPACK_DEV_SERVER_PORT = 3000;
+const MOCKED_API_PORT = process.env.API_PORT;
 
 /*****************************************
 ********* Webpack dev server *************
 ******************************************/
 
-new WebpackDevServer(webpack(configBuilder('dev')), {
-    publicPath: '/',
-    hot: true,
-    historyApiFallback: true,
-    contentBase: './dist/',
-    proxy: {
-        '*': `http://localhost:${MOCKED_API_PORT}`
-    }
-}).listen(WEBPACK_DEV_SERVER_PORT, 'localhost', (err) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log('Webpack dev server listening at http://localhost:%s', WEBPACK_DEV_SERVER_PORT);
-});
+webpackConfig.externals = undefined; // Remove externals to make the app run in the dev server
+serverLauncher(webpackConfig);
 
 /*****************************************
 ************** Mocked API ****************
