@@ -5,7 +5,7 @@ import 'material-design-lite/material.min.css';
 import 'material-design-lite/material.min';
 import './style.scss';
 
-const rootElement = document.querySelector('.comments');
+const rootElement = document.querySelector(`.${__ANCHOR_CLASS__}`);
 render(
     <div data-focus='root'>
         <div data-focus='container'>
