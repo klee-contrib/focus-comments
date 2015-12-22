@@ -8,6 +8,8 @@ Comments extension for the Focus solution.
 npm i -S focus-comments
 ```
 
+Please note that you must you React with addons, so choose the appropriate built files to have `React.addons` defined.
+
 ## Usage
 
 ```jsx
