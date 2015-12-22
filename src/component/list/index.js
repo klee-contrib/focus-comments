@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes, addons} from 'react';
 import ReactDOM from 'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Comment from '../comment';
 import {getComments} from '../../actions';
 import 'animate.css/source/fading_entrances/fadeInRight.css';
 import './style.scss';
 
+const {ReactCSSTransitionGroup} = addons;
 const TRANSITION_TIMEOUT = 5000;
 
 const propTypes = {
