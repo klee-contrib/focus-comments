@@ -6,7 +6,7 @@ import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
 const store = createStore();
 
-export default props => !__DEV__ ? (
+module.exports = props => !__DEV__ ? (
     <Provider store={store}>
         <Comments {...props}/>
     </Provider>
