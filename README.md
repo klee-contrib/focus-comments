@@ -2,6 +2,8 @@
 
 Comments extension for the Focus solution.
 
+![image](https://cloud.githubusercontent.com/assets/5349745/12016949/34f1f058-ad51-11e5-8990-8b4bc3fddba0.png)
+
 ## Installation
 
 ```bash
