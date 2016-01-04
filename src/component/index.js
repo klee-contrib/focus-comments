@@ -100,7 +100,7 @@ class Container extends Component {
                 </div>
                 <div data-focus='input'>
                     <i className='material-icons'>insert_comment</i>
-                    <Input dispatch={dispatch} isLoading={isLoading} scrollToBottom={() => {this.refs.list.scrollToBottom()}} {...otherProps}/>
+                    <Input dispatch={dispatch} isLoading={isLoading} scrollToBottom={() => {if (this.refs.list) this.refs.list.scrollToBottom()}} {...otherProps}/>
                 </div>
             </div>
         );
