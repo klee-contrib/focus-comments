@@ -32,7 +32,8 @@ export const addComment = (concept, conceptId, message, host, date = new Date())
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(comment)
+            body: JSON.stringify(comment),
+            credentials: 'include'
         })
         .then(({status}) => {
             if (status >= 400) {
@@ -58,7 +59,8 @@ export const updateComment = (concept, conceptId, comment, message, host, date =
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newComment)
+            body: JSON.stringify(newComment),
+            credentials: 'include'
         })
         .then(({status}) => {
             if (status >= 400) {
@@ -90,7 +92,7 @@ export const getComments = (concept, conceptId, host, date = new Date()) => {
     return dispatch => {
         dispatch(clearError());
         dispatch(requestComments());
-        return fetch(`${host}/api/comments?concept=${concept}&id=${conceptId}`)
+        return fetch(`${host}/api/comments?concept=${concept}&id=${conceptId}`, {credentials: 'include'})
         .then(response => response.json())
         .then(comments => dispatch(receiveComments(comments, date)))
         .catch(() => dispatch(setError('There was a problem fetching the comments. The backend did not reply correctly.')));
