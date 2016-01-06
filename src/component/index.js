@@ -5,7 +5,7 @@ import Input from './input';
 import './style.scss';
 import 'font-awesome/css/font-awesome.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.scss';
-import {getComments} from '../actions';
+import {getComments, clearComments} from '../actions';
 import moment from 'moment';
 
 const propTypes = {
@@ -17,7 +17,13 @@ const propTypes = {
         placeholder: PropTypes.string.isRequired,
         send: PropTypes.string.isRequired,
         edit: PropTypes.string.isRequired,
-        cancel: PropTypes.string.isRequired
+        cancel: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        singleComment: PropTypes.string.isRequired,
+        comments: PropTypes.string.isRequired,
+        lastUpdate: PropTypes.string.isRequired,
+        loading: PropTypes.string.isRequired,
+        empty: PropTypes.string.isRequired
     }).isRequired,
     locale: PropTypes.string.isRequired
 }
@@ -59,6 +65,7 @@ class Container extends Component {
     }
 
     componentWillUnmount() {
+        this.props.dispatch(clearComments());
         clearInterval(this.refreshInterval);
     }
 

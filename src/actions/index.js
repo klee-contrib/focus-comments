@@ -75,6 +75,7 @@ export const updateComment = (concept, conceptId, comment, message, host, date =
 // Multiple comments actions
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+export const CLEAR_COMMENTS = 'CLEAR_COMMENTS';
 
 const requestComments = () => {
     return {
@@ -98,6 +99,9 @@ export const getComments = (concept, conceptId, host, date = new Date()) => {
         .catch(() => dispatch(setError('There was a problem fetching the comments. The backend did not reply correctly.')));
     }
 }
+export const clearComments = () => ({
+    type: CLEAR_COMMENTS
+});
 
 // Error handling
 
