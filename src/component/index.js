@@ -30,6 +30,7 @@ const defaultProps = {
         edit: 'Edit',
         cancel: 'Cancel',
         title: 'Comments',
+        singleComment: 'comment',
         comments: 'comments',
         lastUpdate: 'Last update',
         loading: 'Loading...',
@@ -79,7 +80,7 @@ class Container extends Component {
                     </div>
                 </div>
                 <div data-focus='body'>
-                    <div data-focus='count'>{`${comments.length} ${this.props.texts.comments}`}</div>
+                    <div data-focus='count'>{`${comments.length} ${comments.length > 1 ? this.props.texts.comments : this.props.texts.singleComment}`}</div>
                     {error &&
                         <div data-focus='comments-error'>
                             <i className='material-icons'>cloud_off</i>
