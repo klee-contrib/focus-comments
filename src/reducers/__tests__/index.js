@@ -10,7 +10,10 @@ const initialState = {
 
 describe('The reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).to.deep.equal(initialState);
+        const {isLoading, comments, error} = reducer(undefined, {});
+        expect(isLoading).to.equal(initialState.isLoading);
+        expect(comments).to.deep.equal(initialState.comments);
+        expect(error).to.equal(initialState.error);
     });
 
     it('should handle ADD_COMMENT', () => {
