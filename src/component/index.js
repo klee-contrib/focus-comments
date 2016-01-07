@@ -5,7 +5,7 @@ import Input from './input';
 import './style.scss';
 import 'font-awesome/css/font-awesome.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.scss';
-import {getComments} from '../actions';
+import {getComments, clearComments} from '../actions';
 import moment from 'moment';
 
 const propTypes = {
@@ -17,7 +17,13 @@ const propTypes = {
         placeholder: PropTypes.string.isRequired,
         send: PropTypes.string.isRequired,
         edit: PropTypes.string.isRequired,
-        cancel: PropTypes.string.isRequired
+        cancel: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        singleComment: PropTypes.string.isRequired,
+        comments: PropTypes.string.isRequired,
+        lastUpdate: PropTypes.string.isRequired,
+        loading: PropTypes.string.isRequired,
+        empty: PropTypes.string.isRequired
     }).isRequired,
     locale: PropTypes.string.isRequired
 }
@@ -30,6 +36,7 @@ const defaultProps = {
         edit: 'Edit',
         cancel: 'Cancel',
         title: 'Comments',
+        singleComment: 'comment',
         comments: 'comments',
         lastUpdate: 'Last update',
         loading: 'Loading...',
@@ -58,6 +65,7 @@ class Container extends Component {
     }
 
     componentWillUnmount() {
+        this.props.dispatch(clearComments());
         clearInterval(this.refreshInterval);
     }
 
@@ -79,7 +87,7 @@ class Container extends Component {
                     </div>
                 </div>
                 <div data-focus='body'>
-                    <div data-focus='count'>{`${comments.length} ${this.props.texts.comments}`}</div>
+                    <div data-focus='count'>{`${comments.length} ${comments.length > 1 ? this.props.texts.comments : this.props.texts.singleComment}`}</div>
                     {error &&
                         <div data-focus='comments-error'>
                             <i className='material-icons'>cloud_off</i>
@@ -100,7 +108,7 @@ class Container extends Component {
                 </div>
                 <div data-focus='input'>
                     <i className='material-icons'>insert_comment</i>
-                    <Input dispatch={dispatch} isLoading={isLoading} scrollToBottom={() => {this.refs.list.scrollToBottom()}} {...otherProps}/>
+                    <Input dispatch={dispatch} isLoading={isLoading} scrollToBottom={() => {if (this.refs.list) this.refs.list.scrollToBottom()}} {...otherProps}/>
                 </div>
             </div>
         );

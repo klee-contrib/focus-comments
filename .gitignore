@@ -1,3 +1,9 @@
 node_modules
 dist
-lib
+
+/actions
+/component
+/example
+/reducers
+/store
+/index.js

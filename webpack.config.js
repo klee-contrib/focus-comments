@@ -1,10 +1,12 @@
 const configBuilder = require('webpack-focus').configBuilder;
 const customConfig = {
     externals: {
-        react: 'React',
+        'react': 'React',
         'react-dom': 'ReactDOM',
         'redux-devtools': 'redux-devtools',
-        'react/lib/ReactCSSTransitionGroup': 'React.addons.ReactCSSTransitionGroup',
+        'react-addons-css-transition-group': {
+            root: ['React', 'addons', 'CSSTransitionGroup']
+        },
         moment: 'moment',
         lodash: 'lodash'
     }

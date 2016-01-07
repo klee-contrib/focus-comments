@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import Comment from '../comment';
 import {getComments} from '../../actions';
 import 'animate.css/source/fading_entrances/fadeInRight.css';
@@ -35,9 +35,9 @@ class List extends Component {
         const {comments, ...otherProps} = this.props;
         return (
             <div data-focus='comments-list' ref='list'>
-                <ReactCSSTransitionGroup transitionName='comment' transitionEnterTimeout={TRANSITION_TIMEOUT} transitionLeaveTimeout={TRANSITION_TIMEOUT}>
+                <CSSTransitionGroup transitionName='comment' transitionEnterTimeout={TRANSITION_TIMEOUT} transitionLeaveTimeout={TRANSITION_TIMEOUT}>
                     {comments.map(comment => <Comment key={comment.uuid} {...comment} {...otherProps}/>)}
-                </ReactCSSTransitionGroup>
+                </CSSTransitionGroup>
             </div>
         );
     }

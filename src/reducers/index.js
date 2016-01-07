@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
-import {ADD_COMMENT, UPDATE_COMMENT, RECEIVE_COMMENTS, REQUEST_COMMENTS, SET_ERROR, CLEAR_ERROR} from '../actions';
+import {ADD_COMMENT, UPDATE_COMMENT, RECEIVE_COMMENTS, REQUEST_COMMENTS, CLEAR_COMMENTS, SET_ERROR, CLEAR_ERROR} from '../actions';
 
 const comments = (state = [], action) => {
     switch (action.type) {
         case RECEIVE_COMMENTS:
             return action.comments;
+        case CLEAR_COMMENTS:
+            return [];
         default:
             return state;
     }

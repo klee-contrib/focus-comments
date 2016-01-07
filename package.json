@@ -1,119 +1,129 @@
 {
-    "name": "focus-comments",
-    "version": "0.2.0",
-    "description": "Comments extension for the Focus framework.",
-    "main": "index.js",
-    "scripts": {
-        "bundle": "better-npm-run bundle",
-        "babelify": "better-npm-run babelify",
-        "prepublish": "npm run bundle && npm run babelify",
-        "start": "better-npm-run dev-server",
-        "test": "better-npm-run test"
+  "name": "focus-comments",
+  "version": "0.3.0",
+  "description": "Comments extension for the Focus framework.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run babelify && npm run copy-sass && npm run bundle",
+    "bundle": "better-npm-run bundle",
+    "babelify": "better-npm-run babelify",
+    "copy-sass": "better-npm-run copy-sass",
+    "prepublish": "npm run build",
+    "start": "better-npm-run dev-server",
+    "test": "better-npm-run test"
+  },
+  "betterScripts": {
+    "bundle": {
+      "command": "webpack --progress",
+      "env": {
+        "DEV": false,
+        "NODE_ENV": "production",
+        "LIBRARY_NAME": "FocusComments",
+        "MINIMIFY": false,
+        "PACKAGE_JSON_PATH": "../"
+      }
     },
-    "betterScripts": {
-        "bundle": {
-            "command": "webpack --progress",
-            "env": {
-                "ENTRY_FILE_PATH": "./src/index",
-                "DEV": false,
-                "NODE_ENV": "production",
-                "LIBRARY_NAME": "FocusComments",
-                "MINIMIFY": false
-            }
-        },
-        "babelify": {
-            "command": "cd src && babel ./**/*.js --out-dir ../lib"
-        },
-        "dev-server": {
-            "command": "node ./server.js",
-            "env": {
-                "ENTRY_FILE_PATH": "./src/example/index",
-                "PAGE_TITLE": "Focus comments dev page",
-                "MINIMIFY": false,
-                "API_PORT": 9999
-            }
-        },
-        "test": {
-            "command": "node ./node_modules/mocha/bin/mocha src/**/__tests__/**/*.js"
-        }
+    "babelify": {
+      "command": "babel src --out-dir ./ --source-maps inline"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/KleeGroup/focus-comments.git"
+    "copy-sass": {
+      "command": "cd src && find . -name *.scss | xargs tar cvf - | tar xfp - -C ../"
     },
-    "keywords": [
-        "focus",
-        "extension",
-        "comments"
-    ],
-    "babel": {
-        "presets": [
-            "react",
-            "es2015",
-            "stage-0"
-        ]
+    "dev-server": {
+      "command": "node ./server.js",
+      "env": {
+        "ENTRY_FILE_PATH": "./src/example/index",
+        "PAGE_TITLE": "Focus comments dev page",
+        "MINIMIFY": false,
+        "API_PORT": 9999,
+        "PACKAGE_JSON_PATH": "../"
+      }
     },
-    "author": "focus@kleegroup.com",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/KleeGroup/focus-comments/issues"
-    },
-    "homepage": "https://github.com/KleeGroup/focus-comments#readme",
-    "dependencies": {
-        "better-npm-run": "0.0.5",
-        "isomorphic-fetch": "^2.1.1",
-        "lodash": "^3.10.1",
-        "material-design-lite": "1.0.5",
-        "moment": "^2.10.6",
-        "react": "0.14.4",
-        "react-dom": "0.14.4",
-        "react-redux": "^3.1.0",
-        "redux": "^3.0.2",
-        "redux-logger": "^2.0.3",
-        "redux-thunk": "^1.0.0"
-    },
-    "devDependencies": {
-        "animate.css": "^3.4.0",
-        "babel": "^6.0.15",
-        "babel-core": "^6.1.2",
-        "babel-eslint": "^4.1.4",
-        "babel-loader": "^6.1.0",
-        "babel-preset-es2015": "^6.1.2",
-        "babel-preset-react": "^6.1.2",
-        "babel-preset-stage-0": "^6.1.2",
-        "babel-runtime": "^6.0.14",
-        "body-parser": "^1.14.1",
-        "chai": "^3.3.0",
-        "chai-subset": "^1.1.0",
-        "css-loader": "^0.16.0",
-        "eslint": "1.5.1",
-        "eslint-config-focus": "^0.3.0",
-        "eslint-plugin-filenames": "0.1.1",
-        "eslint-plugin-react": "3.5.0",
-        "express": "^4.13.3",
-        "extract-text-webpack-plugin": "^0.8.2",
-        "faker": "^3.0.1",
-        "file-loader": "^0.8.4",
-        "font-awesome": "^4.4.0",
-        "html-webpack-plugin": "^1.6.2",
-        "jsdom": "^6.5.1",
-        "json-loader": "^0.5.2",
-        "material-design-icons-iconfont": "^2.0.3",
-        "material-design-lite": "^1.0.5",
-        "mocha": "^2.3.0",
-        "moment": "^2.10.6",
-        "nock": "^2.17.0",
-        "node-sass": "^3.3.3",
-        "react-addons-css-transition-group": "^0.14.2",
-        "react-addons-test-utils": "^0.14.0",
-        "react-hot-loader": "^1.2.7",
-        "redux-devtools": "^2.1.5",
-        "sass-loader": "^3.0.0",
-        "sinon": "^1.17.1",
-        "sinon-chai": "^2.8.0",
-        "style-loader": "^0.12.3",
-        "url-loader": "^0.5.6",
-        "webpack": "^1.9.6",
-        "webpack-dev-server": "^1.8.2"
+    "test": {
+      "command": "node ./node_modules/mocha/bin/mocha src/**/__tests__/**/*.js"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KleeGroup/focus-comments.git"
+  },
+  "keywords": [
+    "focus",
+    "extension",
+    "comments"
+  ],
+  "babel": {
+    "presets": [
+      "react",
+      "es2015",
+      "stage-0"
+    ]
+  },
+  "author": "focus@kleegroup.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KleeGroup/focus-comments/issues"
+  },
+  "homepage": "https://github.com/KleeGroup/focus-comments#readme",
+  "dependencies": {
+    "better-npm-run": "0.0.5",
+    "isomorphic-fetch": "^2.1.1",
+    "keymaster": "^1.6.2",
+    "lodash": "^3.10.1",
+    "material-design-lite": "1.0.5",
+    "moment": "^2.10.6",
+    "react": "0.14.5",
+    "react-dom": "0.14.5",
+    "react-redux": "^3.1.0",
+    "redux": "^3.0.2",
+    "redux-logger": "^2.0.3",
+    "redux-thunk": "^1.0.0"
+  },
+  "devDependencies": {
+    "animate.css": "^3.4.0",
+    "babel": "^6.0.15",
+    "babel-cli": "^6.4.0",
+    "babel-core": "^6.1.2",
+    "babel-eslint": "^4.1.4",
+    "babel-loader": "^6.1.0",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-react": "^6.1.2",
+    "babel-preset-stage-0": "^6.1.2",
+    "babel-runtime": "^6.0.14",
+    "body-parser": "^1.14.1",
+    "chai": "^3.3.0",
+    "chai-subset": "^1.1.0",
+    "css-loader": "^0.16.0",
+    "eslint": "1.5.1",
+    "eslint-config-focus": "^0.3.0",
+    "eslint-plugin-filenames": "0.1.1",
+    "eslint-plugin-react": "3.5.0",
+    "express": "^4.13.3",
+    "extract-text-webpack-plugin": "^0.8.2",
+    "faker": "^3.0.1",
+    "file-loader": "^0.8.4",
+    "font-awesome": "^4.4.0",
+    "html-webpack-plugin": "^1.6.2",
+    "jsdom": "^6.5.1",
+    "json-loader": "^0.5.2",
+    "material-design-icons-iconfont": "^2.0.3",
+    "material-design-lite": "^1.0.5",
+    "mocha": "^2.3.0",
+    "moment": "^2.10.6",
+    "nock": "^2.17.0",
+    "node-sass": "^3.3.3",
+    "react-addons-css-transition-group": "0.14.4",
+    "react-addons-test-utils": "0.14.4",
+    "react-hot-loader": "^1.2.7",
+    "redux-devtools": "^2.1.5",
+    "sass-loader": "^3.0.0",
+    "sinon": "^1.17.1",
+    "sinon-chai": "^2.8.0",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.9.6",
+    "webpack-dev-server": "^1.8.2",
+    "webpack-focus": "^0.8.6"
+  }
 }
