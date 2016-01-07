@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import {addComment, updateComment} from '../../actions';
+import key from 'keymaster';
 import './style.scss';
 
 const propTypes = {
@@ -20,12 +22,31 @@ class Input extends Component {
         }
     }
 
+    componentDidMount() {
+        key.filter = (event) => {
+            const tagName = (event.target || event.srcElement).tagName;
+            return !(tagName === 'INPUT' || tagName === 'SELECT');
+        }
+        key('⌘+enter, ctrl+enter', ::this._handleKeystroke);
+    }
+
     componentWillReceiveProps({isLoading}) {
         if (!isLoading && this.props.isLoading) {
             this.setState({
                 value: ''
             }, this.props.scrollToBottom);
         }
+    }
+
+    componentWillUnmount() {
+        key.unbind('⌘+enter, ctrl+enter');
+    }
+
+    _handleKeystroke({target}) {
+        if (target === ReactDOM.findDOMNode(this.refs.textarea)) {
+            this._sendClickHandler();
+        }
+        return false;
     }
 
     _inputChangeHandler({target: {value}}) {
@@ -36,13 +57,13 @@ class Input extends Component {
         const {dispatch, apiRootUrl, concept, conceptId, inputType, uuid, author, creationDate, lastModified, authorDisplayName} = this.props;
         switch (inputType) {
             case 'creation':
-                dispatch(addComment(concept, conceptId, this.state.value, apiRootUrl));
-                break;
+            dispatch(addComment(concept, conceptId, this.state.value, apiRootUrl));
+            break;
             case 'update':
-                dispatch(updateComment(concept, conceptId, {uuid, author, creationDate, lastModified, authorDisplayName}, this.state.value, apiRootUrl));
-                break;
+            dispatch(updateComment(concept, conceptId, {uuid, author, creationDate, lastModified, authorDisplayName}, this.state.value, apiRootUrl));
+            break;
             default:
-                break;
+            break;
         }
     }
 
@@ -51,8 +72,8 @@ class Input extends Component {
         const {texts: {placeholder, send}, isLoading} = this.props;
         return (
             <div data-focus='comment-input'>
-                <textarea type='text' onChange={this._inputChangeHandler.bind(this)} placeholder={placeholder} rows='3' value={value}></textarea>
-                <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--raised' disabled={isLoading} onClick={this._sendClickHandler.bind(this)}>
+                <textarea type='text' onChange={::this._inputChangeHandler} placeholder={placeholder} rows='3' value={value} ref='textarea'></textarea>
+                <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--raised' disabled={isLoading} onClick={::this._sendClickHandler}>
                     {send}
                 </button>
             </div>
