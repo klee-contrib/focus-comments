@@ -4,9 +4,7 @@ import {Provider} from 'react-redux';
 import Comments from './component';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
-// Check if we are bundling. If yes, package.json is found in ../ If no, then we are babelifying so it is in ./
-const packageJsonPath = process.env.BUNDLING ? '..' : '.'
-const infos = require(`${packageJsonPath}/package.json`);
+const infos = require(`${__PACKAGE_JSON_PATH__}/package.json`);
 
 const store = createStore();
 

@@ -4,9 +4,11 @@
   "description": "Comments extension for the Focus framework.",
   "main": "index.js",
   "scripts": {
+    "build": "npm run babelify && npm run copy-sass && npm run bundle",
     "bundle": "better-npm-run bundle",
     "babelify": "better-npm-run babelify",
-    "prepublish": "npm run bundle && npm run babelify",
+    "copy-sass": "better-npm-run copy-sass",
+    "prepublish": "npm run build",
     "start": "better-npm-run dev-server",
     "test": "better-npm-run test"
   },
@@ -14,15 +16,18 @@
     "bundle": {
       "command": "webpack --progress",
       "env": {
-        "ENTRY_FILE_PATH": "./src/index",
         "DEV": false,
         "NODE_ENV": "production",
         "LIBRARY_NAME": "FocusComments",
-        "MINIMIFY": false
+        "MINIMIFY": false,
+        "PACKAGE_JSON_PATH": "../"
       }
     },
     "babelify": {
-      "command": "cd src && babel ./**/*.js --out-dir ../lib"
+      "command": "babel src --out-dir ./ --source-maps inline"
+    },
+    "copy-sass": {
+      "command": "cd src && find . -name *.scss | xargs tar cvf - | tar xfp - -C ../"
     },
     "dev-server": {
       "command": "node ./server.js",
@@ -30,7 +35,8 @@
         "ENTRY_FILE_PATH": "./src/example/index",
         "PAGE_TITLE": "Focus comments dev page",
         "MINIMIFY": false,
-        "API_PORT": 9999
+        "API_PORT": 9999,
+        "PACKAGE_JSON_PATH": "../"
       }
     },
     "test": {
@@ -76,6 +82,7 @@
   "devDependencies": {
     "animate.css": "^3.4.0",
     "babel": "^6.0.15",
+    "babel-cli": "^6.4.0",
     "babel-core": "^6.1.2",
     "babel-eslint": "^4.1.4",
     "babel-loader": "^6.1.0",
@@ -117,6 +124,6 @@
     "url-loader": "^0.5.6",
     "webpack": "^1.9.6",
     "webpack-dev-server": "^1.8.2",
-    "webpack-focus": "0.8.4"
+    "webpack-focus": "^0.8.6"
   }
 }
