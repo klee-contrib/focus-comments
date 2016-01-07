@@ -11,5 +11,8 @@ const customConfig = {
         lodash: 'lodash'
     }
 }
+const definedVariables = {
+    __REDUX_DEBUG__: process.env.REDUX_DEVTOOLS
+}
 
-module.exports = configBuilder(customConfig);
+module.exports = configBuilder(customConfig, definedVariables);
