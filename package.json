@@ -8,7 +8,6 @@
     "bundle": "better-npm-run bundle",
     "babelify": "better-npm-run babelify",
     "copy-sass": "better-npm-run copy-sass",
-    "prepublish": "npm run build",
     "start": "better-npm-run dev-server",
     "test": "better-npm-run test"
   },
