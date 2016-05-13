@@ -24,7 +24,7 @@
     },
     "babelify": {
       "env": {
-        "BABEL_ENV": "production",
+        "BABEL_ENV": "production"
       },
       "command": "node scripts/babelify.js"
     },
