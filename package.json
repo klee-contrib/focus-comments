@@ -1,6 +1,6 @@
 {
   "name": "focus-comments",
-  "version": "0.3.6-beta1",
+  "version": "0.3.6-beta2",
   "description": "Comments extension for the Focus framework.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,8 @@
         "NODE_ENV": "production",
         "LIBRARY_NAME": "FocusComments",
         "MINIMIFY": false,
-        "PACKAGE_JSON_PATH": "../"
+        "PACKAGE_JSON_PATH": "../",
+        "BABEL_ENV": "production"
       }
     },
     "babelify": {
