@@ -1,6 +1,6 @@
 {
   "name": "focus-comments",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Comments extension for the Focus framework.",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,8 @@
       }
     },
     "babelify": {
-      "command": "babel src --out-dir ./ --source-maps inline"
+      "BABEL_ENV": "production",
+      "command": "node scripts/babelify.js"
     },
     "copy-sass": {
       "command": "cd src && find . -name *.scss | xargs tar cvf - | tar xfp - -C ../"
