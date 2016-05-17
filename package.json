@@ -1,6 +1,6 @@
 {
   "name": "focus-comments",
-  "version": "0.3.6-beta3",
+  "version": "0.3.6-beta4",
   "description": "Comments extension for the Focus framework.",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,15 @@
     "start": "better-npm-run dev-server",
     "test": "better-npm-run test"
   },
+  "files": [
+    "dist",
+    "actions",
+    "component",
+    "example",
+    "reducers",
+    "store",
+    "index.js"
+  ],
   "betterScripts": {
     "bundle": {
       "command": "webpack --progress",
