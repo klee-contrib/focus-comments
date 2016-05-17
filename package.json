@@ -11,6 +11,15 @@
     "start": "better-npm-run dev-server",
     "test": "better-npm-run test"
   },
+  "files": [
+    "dist",
+    "actions",
+    "component",
+    "example",
+    "reducers",
+    "store",
+    "index.js"
+  ],
   "betterScripts": {
     "bundle": {
       "command": "webpack --progress",
