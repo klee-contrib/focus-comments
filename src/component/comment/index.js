@@ -12,7 +12,12 @@ const propTypes = {
     lastModified: PropTypes.string.isRequired,
     authorDisplayName: PropTypes.string.isRequired,
     userPictureResolver: PropTypes.func.isRequired,
-    currentUserId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    currentUserId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    showAvatar: PropTypes.bool
+}
+
+const defaultProps = {
+        showAvatar: true
 }
 
 class Comment extends Component {
@@ -29,16 +34,20 @@ class Comment extends Component {
         }
     }
 
+
+
     render() {
-        const {msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, ...otherProps} = this.props;
+        const {msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, showAvatar, ...otherProps} = this.props;
         const {isEditing} = this.state;
         const isMine = currentUserId === author;
         return (
             <div data-focus='comment' data-editing={isEditing}>
-                <div data-focus='avatar'>
-                    <i className='material-icons'>account_circle</i>
-                    <img src={userPictureResolver(author)}/>
-                </div>
+                {showAvatar &&
+                    <div data-focus='avatar'>
+                        <i className='material-icons'>account_circle</i>
+                        <img src={userPictureResolver(author)}/>
+                    </div>
+                }
                 <div data-focus='content'>
                     <div data-focus='head'>
                         <div data-focus='name'>
@@ -66,5 +75,6 @@ class Comment extends Component {
 }
 
 Comment.propTypes = propTypes;
+Comment.defaultProps= defaultProps;
 
 export default Comment;
