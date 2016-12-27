@@ -37,16 +37,16 @@ class Comment extends Component {
 
 
     render() {
-        const {msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts,showAvatar, ...otherProps} = this.props;
+        const {msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, showAvatar, ...otherProps} = this.props;
         const {isEditing} = this.state;
         const isMine = currentUserId === author;
         return (
             <div data-focus='comment' data-editing={isEditing}>
                 {showAvatar &&
-                <div data-focus='avatar'>
-                    <i className='material-icons'>account_circle</i>
-                    <img src={userPictureResolver(author)}/>
-                </div>
+                    <div data-focus='avatar'>
+                        <i className='material-icons'>account_circle</i>
+                        <img src={userPictureResolver(author)}/>
+                    </div>
                 }
                 <div data-focus='content'>
                     <div data-focus='head'>
