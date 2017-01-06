@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import List from './list';
 import Input from './input';
 import './style.scss';
-import 'font-awesome/css/font-awesome.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.scss';
 import {getComments, clearComments} from '../actions';
 import moment from 'moment';
