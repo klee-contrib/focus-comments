@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+//ceci est un test
+
 // Single comment actions
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
