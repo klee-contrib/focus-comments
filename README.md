@@ -28,5 +28,12 @@ Please note that you must you React with addons, so choose the appropriate built
     - **placeholder** (`string`): placeholder for the input field,
     - **send** (`string`): send button caption,
     - **edit** (`string`): edit button caption,
-    - **cancel** (`string`): cancel button caption
-- **locale** (`string`): application locale (from [momentJS](http://momentjs.com/docs/#/i18n/changing-locale/))
+    - **cancel** (`string`): cancel button caption,
+    - **title** (`string`): title caption,
+    - **singleComment** (`string`): single comment caption,
+    - **comments** (`string`): comments caption,
+    - **lastUpdate** (`string`): last update caption,
+    - **loading** (`string`): loading caption,
+    - **empty** (`string`): empty caption
+- **locale** (`string`): application locale (from [momentJS](http://momentjs.com/docs/#/i18n/changing-locale/)),
+- **currentUserId** (`number`): the current user id
