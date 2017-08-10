@@ -37,3 +37,4 @@ Please note that you must you React with addons, so choose the appropriate built
     - **empty** (`string`): empty caption
 - **locale** (`string`): application locale (from [momentJS](http://momentjs.com/docs/#/i18n/changing-locale/)),
 - **currentUserId** (`number`): the current user id
+- **messageSentCallback** (`function`): a callback to know when a message has been sent
