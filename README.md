@@ -40,3 +40,5 @@ Please note that you must you React with addons, so choose the appropriate built
 - **messageSentCallback** (`function`): a callback to know when a message has been sent
 - **timeDisplay** (`string`): the display format, either `ago` or `dateTime`, `ago` by default
 - **dateTimeFormat** (`string`): the dateTime format if **timeDisplay** is set to `dateTime`
+- **registerRefreshCommentsCallback** (`function`): method to register a refresh comment callback into parent
+- **unregisterRefreshCommentsCallback** (`function`): method to unregister the refresh comment callback from parent
