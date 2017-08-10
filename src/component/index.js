@@ -26,7 +26,9 @@ const propTypes = {
         empty: PropTypes.string.isRequired
     }).isRequired,
     locale: PropTypes.string.isRequired,
-    messageSentCallback: PropTypes.func
+    messageSentCallback: PropTypes.func,
+    timeDisplay: PropTypes.oneOf(['ago', 'dateTime']),
+    dateTimeFormat: PropTypes.string
 }
 
 const defaultProps = {
@@ -43,7 +45,9 @@ const defaultProps = {
         loading: 'Loading...',
         empty: 'Be the first to leave your comment below !'
     },
-    locale: 'en'
+    locale: 'en',
+    timeDisplay: 'ago',
+    dateTimeFormat: 'DD/MM/YYYY HH:mm'
 }
 
 class Container extends Component {
