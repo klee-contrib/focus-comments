@@ -1,12 +1,13 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import {addComment, updateComment} from '../../actions';
+import { addComment, updateComment } from '../../actions';
 import key from 'keymaster';
 import './style.scss';
 
 const propTypes = {
     value: PropTypes.string.isRequired,
-    inputType: PropTypes.oneOf(['creation', 'update']).isRequired
+    inputType: PropTypes.oneOf(['creation', 'update']).isRequired,
+    messageSentCallback: PropTypes.func
 }
 
 const defaultProps = {
@@ -30,7 +31,7 @@ class Input extends Component {
         key('⌘+enter, ctrl+enter', ::this._handleKeystroke);
     }
 
-    componentWillReceiveProps({isLoading}) {
+    componentWillReceiveProps({ isLoading }) {
         if (!isLoading && this.props.isLoading) {
             this.setState({
                 value: ''
@@ -42,41 +43,45 @@ class Input extends Component {
         key.unbind('⌘+enter, ctrl+enter');
     }
 
-    _handleKeystroke({target}) {
+    _handleKeystroke({ target }) {
         if (target === ReactDOM.findDOMNode(this.refs.textarea)) {
             this._sendClickHandler();
         }
         return false;
     }
 
-    _inputChangeHandler({target: {value}}) {
-        this.setState({value});
+    _inputChangeHandler({ target: { value } }) {
+        this.setState({ value });
     }
 
     _sendClickHandler() {
-        const {dispatch, apiRootUrl, concept, conceptId, inputType, uuid, author, creationDate, lastModified, authorDisplayName} = this.props;
+        const { dispatch, apiRootUrl, concept, conceptId, inputType, uuid, author, creationDate, lastModified, authorDisplayName, messageSentCallback } = this.props;
         switch (inputType) {
             case 'creation':
-            dispatch(addComment(concept, conceptId, this.state.value, apiRootUrl));
-            break;
+                dispatch(addComment(concept, conceptId, this.state.value, apiRootUrl));
+                break;
             case 'update':
-            dispatch(updateComment(concept, conceptId, {uuid, author, creationDate, lastModified, authorDisplayName}, this.state.value, apiRootUrl));
-            break;
+                dispatch(updateComment(concept, conceptId, { uuid, author, creationDate, lastModified, authorDisplayName }, this.state.value, apiRootUrl));
+                break;
             default:
-            break;
+                break;
+        }
+
+        if (messageSentCallback) {
+            messageSentCallback();
         }
     }
 
     render() {
-        const {value} = this.state;
-        const {texts: {placeholder, send}, isLoading} = this.props;
+        const { value } = this.state;
+        const { texts: { placeholder, send }, isLoading } = this.props;
         return (
             <div data-focus='comment-input'>
                 <textarea type='text' onChange={::this._inputChangeHandler} placeholder={placeholder} rows='3' value={value} ref='textarea'></textarea>
-                <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--raised' disabled={isLoading} onClick={::this._sendClickHandler}>
-                    {send}
-                </button>
-            </div>
+            <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--raised' disabled={isLoading} onClick={::this._sendClickHandler}>
+                { send }
+                </button >
+            </div >
         )
     }
 }
