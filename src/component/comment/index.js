@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import './style.scss';
 import moment from 'moment';
@@ -13,11 +13,13 @@ const propTypes = {
     authorDisplayName: PropTypes.string.isRequired,
     userPictureResolver: PropTypes.func.isRequired,
     currentUserId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    showAvatar: PropTypes.bool
+    showAvatar: PropTypes.bool,
+    timeDisplay: PropTypes.oneOf(['ago', 'dateTime']).isRequired,
+    dateTimeFormat: PropTypes.string.isRequired
 }
 
 const defaultProps = {
-        showAvatar: true
+    showAvatar: true
 }
 
 class Comment extends Component {
@@ -28,24 +30,22 @@ class Comment extends Component {
         };
     }
 
-    componentWillReceiveProps({isLoading}) {
+    componentWillReceiveProps({ isLoading }) {
         if (isLoading === false && this.props.isLoading === true && this.state.isEditing) {
-            this.setState({isEditing: false});
+            this.setState({ isEditing: false });
         }
     }
 
-
-
     render() {
-        const {msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, showAvatar, ...otherProps} = this.props;
-        const {isEditing} = this.state;
+        const { msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, showAvatar, timeDisplay, dateTimeFormat, ...otherProps } = this.props;
+        const { isEditing } = this.state;
         const isMine = currentUserId === author;
         return (
             <div data-focus='comment' data-editing={isEditing}>
                 {showAvatar &&
                     <div data-focus='avatar'>
                         <i className='material-icons'>account_circle</i>
-                        <img src={userPictureResolver(author)}/>
+                        <img src={userPictureResolver(author)} />
                     </div>
                 }
                 <div data-focus='content'>
@@ -55,17 +55,18 @@ class Comment extends Component {
                         </div>
                         {isMine &&
                             <div data-focus='edit'>
-                                <a data-focus='toggle' onClick={() => {this.setState({isEditing: !this.state.isEditing})}}>
+                                <a data-focus='toggle' onClick={() => { this.setState({ isEditing: !this.state.isEditing }) }}>
                                     {isEditing ? texts.cancel : texts.edit}
                                 </a>
                             </div>
                         }
                         <div data-focus='date'>
-                            {moment(creationDate).fromNow()}
+                            {timeDisplay === 'ago' && moment(creationDate).fromNow()}
+                            {timeDisplay === 'dateTime' && moment(creationDate).format(dateTimeFormat)}
                         </div>
                     </div>
                     <div data-focus='body'>
-                        {isMine && isEditing ? <Input inputType='update' texts={{...texts, placeholder: ''}} {...{author, authorDisplayName, creationDate, ...otherProps}} ref='edit' value={msg}/> : <div dangerouslySetInnerHTML={{__html: msg.replace(/\n/g, '<br>')}}></div>}
+                        {isMine && isEditing ? <Input inputType='update' texts={{ ...texts, placeholder: '' }} {...{ author, authorDisplayName, creationDate, ...otherProps }} ref='edit' value={msg} /> : <div dangerouslySetInnerHTML={{ __html: msg.replace(/\n/g, '<br>') }}></div>}
                     </div>
                     <div className='separator'></div>
                 </div>
@@ -75,6 +76,6 @@ class Comment extends Component {
 }
 
 Comment.propTypes = propTypes;
-Comment.defaultProps= defaultProps;
+Comment.defaultProps = defaultProps;
 
 export default Comment;

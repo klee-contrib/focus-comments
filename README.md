@@ -38,3 +38,5 @@ Please note that you must you React with addons, so choose the appropriate built
 - **locale** (`string`): application locale (from [momentJS](http://momentjs.com/docs/#/i18n/changing-locale/)),
 - **currentUserId** (`number`): the current user id
 - **messageSentCallback** (`function`): a callback to know when a message has been sent
+- **timeDisplay** (`string`): the display format, either `ago` or `dateTime`, `ago` by default
+- **dateTimeFormat** (`string`): the dateTime format if **timeDisplay** is set to `dateTime`
