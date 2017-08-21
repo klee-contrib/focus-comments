@@ -68,7 +68,7 @@ class Input extends Component {
         }
 
         if (messageSentCallback) {
-            messageSentCallback();
+            messageSentCallback(inputType);
         }
     }
 
