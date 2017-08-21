@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import List from './list';
 import Input from './input';
 import './style.scss';
 import 'font-awesome/css/font-awesome.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.scss';
-import {getComments, clearComments} from '../actions';
+import { getComments, clearComments } from '../actions';
 import moment from 'moment';
 
 const propTypes = {
@@ -25,7 +25,8 @@ const propTypes = {
         loading: PropTypes.string.isRequired,
         empty: PropTypes.string.isRequired
     }).isRequired,
-    locale: PropTypes.string.isRequired
+    locale: PropTypes.string.isRequired,
+    messageSentCallback: PropTypes.func
 }
 
 const defaultProps = {
@@ -47,13 +48,13 @@ const defaultProps = {
 
 class Container extends Component {
     _refreshComments() {
-        const {dispatch, concept, conceptId, apiRootUrl} = this.props;
+        const { dispatch, concept, conceptId, apiRootUrl } = this.props;
         dispatch(getComments(concept, conceptId, apiRootUrl));
     }
 
     componentWillMount() {
         moment.locale(this.props.locale);
-        const {dispatch, apiRootUrl, concept, conceptId} = this.props;
+        const { dispatch, apiRootUrl, concept, conceptId } = this.props;
         dispatch(getComments(concept, conceptId, apiRootUrl));
     }
 
@@ -70,7 +71,7 @@ class Container extends Component {
     }
 
     render() {
-        const {comments, dispatch, isLoading, lastUpdate, error, ...otherProps} = this.props;
+        const { comments, dispatch, isLoading, lastUpdate, error, ...otherProps } = this.props;
         return (
             <div data-focus='comments-extension'>
                 <div data-focus='header'>
@@ -103,12 +104,12 @@ class Container extends Component {
                             </div>
                         </div>
                         :
-                        <List comments={comments} dispatch={dispatch} isLoading={isLoading} {...otherProps} ref='list'/>
+                        <List comments={comments} dispatch={dispatch} isLoading={isLoading} {...otherProps} ref='list' />
                     }
                 </div>
                 <div data-focus='input'>
                     <i className='material-icons'>insert_comment</i>
-                    <Input dispatch={dispatch} isLoading={isLoading} scrollToBottom={() => {if (this.refs.list) this.refs.list.scrollToBottom()}} {...otherProps}/>
+                    <Input dispatch={dispatch} isLoading={isLoading} scrollToBottom={() => { if (this.refs.list) this.refs.list.scrollToBottom() }} {...otherProps} />
                 </div>
             </div>
         );
@@ -118,8 +119,8 @@ class Container extends Component {
 Container.propTypes = propTypes;
 Container.defaultProps = defaultProps;
 
-const select = ({comments, isLoading, lastUpdate, error}) => {
-    return {comments, isLoading, lastUpdate, error};
+const select = ({ comments, isLoading, lastUpdate, error }) => {
+    return { comments, isLoading, lastUpdate, error };
 }
 
 export default connect(select)(Container);
