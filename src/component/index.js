@@ -28,7 +28,9 @@ const propTypes = {
     locale: PropTypes.string.isRequired,
     messageSentCallback: PropTypes.func,
     timeDisplay: PropTypes.oneOf(['ago', 'dateTime']),
-    dateTimeFormat: PropTypes.string
+    dateTimeFormat: PropTypes.string,
+    registerRefreshCommentsMethod: PropTypes.func,
+    unregisterRefreshCommentsMethod: PropTypes.func
 }
 
 const defaultProps = {
@@ -47,18 +49,27 @@ const defaultProps = {
     },
     locale: 'en',
     timeDisplay: 'ago',
-    dateTimeFormat: 'DD/MM/YYYY HH:mm'
+    dateTimeFormat: 'DD/MM/YYYY HH:mm',
+    registerRefreshCommentsMethod: undefined,
+    unregisterRefreshCommentsMethod: undefined
 }
 
 class Container extends Component {
-    _refreshComments() {
-        const { dispatch, concept, conceptId, apiRootUrl } = this.props;
-        dispatch(getComments(concept, conceptId, apiRootUrl));
+
+    constructor(props) {
+        super(props);
+
+        this._refreshComments = this._refreshComments.bind(this);
     }
 
     componentWillMount() {
+        const { dispatch, apiRootUrl, concept, conceptId, locale, registerRefreshCommentsMethod } = this.props;
+
+        if (registerRefreshCommentsMethod) {
+            registerRefreshCommentsMethod(this._refreshComments);
+        }
+
         moment.locale(this.props.locale);
-        const { dispatch, apiRootUrl, concept, conceptId } = this.props;
         dispatch(getComments(concept, conceptId, apiRootUrl));
     }
 
@@ -70,8 +81,19 @@ class Container extends Component {
     }
 
     componentWillUnmount() {
-        this.props.dispatch(clearComments());
+        const { dispatch, unregisterRefreshCommentsMethod } = this.props;
+
+        if (unregisterRefreshCommentsMethod) {
+            unregisterRefreshCommentsMethod();
+        }
+
+        dispatch(clearComments());
         clearInterval(this.refreshInterval);
+    }
+
+    _refreshComments() {
+        const { dispatch, concept, conceptId, apiRootUrl } = this.props;
+        dispatch(getComments(concept, conceptId, apiRootUrl));
     }
 
     render() {
@@ -82,7 +104,7 @@ class Container extends Component {
                     <div data-focus='title'>{this.props.texts.title}</div>
                     <div data-focus='last-update'>{isLoading ? this.props.texts.loading : `${this.props.texts.lastUpdate} ${moment(lastUpdate).fromNow()}`}</div>
                     <div data-focus='refresh'>
-                        <button className='mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--raised' onClick={this._refreshComments.bind(this)}>
+                        <button className='mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--raised' onClick={this._refreshComments}>
                             {isLoading ?
                                 <i className="fa fa-circle-o-notch fa-spin"></i>
                                 :
