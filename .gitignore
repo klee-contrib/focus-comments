@@ -1,9 +1,2 @@
 node_modules
 dist
-
-/actions
-/component
-/example
-/reducers
-/store
-/index.js

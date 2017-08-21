@@ -1,0 +1,18 @@
+body {
+    [data-focus='top'] {
+        height: 30vh;
+        background-color: #3f51b5;
+    }
+    [data-focus='bottom'] {
+        height: 70vh;
+        background-color: #e9e9e9;
+    }
+    [data-focus='container'] {
+        position: fixed;
+        top: 10vh;
+        width: 60vw;
+        left: 20vw;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+    min-height: 100vh;
+}
