@@ -29,8 +29,8 @@ const propTypes = {
     messageSentCallback: PropTypes.func,
     timeDisplay: PropTypes.oneOf(['ago', 'dateTime']),
     dateTimeFormat: PropTypes.string,
-    registerRefreshCommentsCallback: PropTypes.func,
-    unregisterRefreshCommentsCallback: PropTypes.func
+    registerRefreshCommentsMethod: PropTypes.func,
+    unregisterRefreshCommentsMethod: PropTypes.func
 }
 
 const defaultProps = {
@@ -50,8 +50,8 @@ const defaultProps = {
     locale: 'en',
     timeDisplay: 'ago',
     dateTimeFormat: 'DD/MM/YYYY HH:mm',
-    registerRefreshCommentsCallback: undefined,
-    unregisterRefreshCommentsCallback: undefined
+    registerRefreshCommentsMethod: undefined,
+    unregisterRefreshCommentsMethod: undefined
 }
 
 class Container extends Component {
@@ -63,10 +63,10 @@ class Container extends Component {
     }
 
     componentWillMount() {
-        const { dispatch, apiRootUrl, concept, conceptId, locale, registerRefreshCommentsCallback } = this.props;
+        const { dispatch, apiRootUrl, concept, conceptId, locale, registerRefreshCommentsMethod } = this.props;
 
-        if (registerRefreshCommentsCallback) {
-            registerRefreshCommentsCallback(this._refreshComments);
+        if (registerRefreshCommentsMethod) {
+            registerRefreshCommentsMethod(this._refreshComments);
         }
 
         moment.locale(this.props.locale);
@@ -81,10 +81,10 @@ class Container extends Component {
     }
 
     componentWillUnmount() {
-        const { dispatch, unregisterRefreshCommentsCallback } = this.props;
+        const { dispatch, unregisterRefreshCommentsMethod } = this.props;
 
-        if (unregisterRefreshCommentsCallback) {
-            unregisterRefreshCommentsCallback();
+        if (unregisterRefreshCommentsMethod) {
+            unregisterRefreshCommentsMethod();
         }
 
         dispatch(clearComments());
