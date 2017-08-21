@@ -18,7 +18,8 @@
     "example",
     "reducers",
     "store",
-    "index.js"
+    "index.js",
+    "src"
   ],
   "betterScripts": {
     "bundle": {
