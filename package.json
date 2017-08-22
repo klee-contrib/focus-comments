@@ -1,6 +1,6 @@
 {
   "name": "focus-comments",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Comments extension for the Focus framework.",
   "main": "index.js",
   "scripts": {
