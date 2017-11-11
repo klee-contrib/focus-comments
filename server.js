@@ -1,19 +1,10 @@
-"use strict";
+'use strict';
 
-const webpackConfig = require('./webpack.config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const faker = require('faker');
-const serverLauncher = require('webpack-focus').serverLauncher;
 
-const MOCKED_API_PORT = process.env.API_PORT;
-
-/*****************************************
-********* Webpack dev server *************
-******************************************/
-
-webpackConfig.externals = undefined; // Remove externals to make the app run in the dev server
-serverLauncher(webpackConfig);
+const MOCKED_API_PORT = process.env.API_PORT || 4444;
 
 /*****************************************
 ************** Mocked API ****************
@@ -54,15 +45,16 @@ comments = comments.sort(function compare(a, b) {
 const avatars = comments.reduce(function reduceComments(result, comment) {
     result[comment.author] = faker.image.avatar();
     return result;
-}, {[myId]: faker.image.avatar()});
+}, { [myId]: faker.image.avatar() });
 
 
 // Middlewares
 
 app.use(function corsMiddleware(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
     res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,DELETE');
+    res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Content-Type', 'application/json');
     next();
 });
@@ -95,6 +87,15 @@ app.put(API_ROOT + '/api/comments/:uuid', function updateComment(req, res) {
         }
         return comment;
     });
+    res.end();
+});
+
+app.delete(API_ROOT + '/api/comments/:uuid', function deleteComment(req, res) {
+    const uuid = req.params.uuid;
+    comments = comments.filter(function deleteComment(comment) {
+        return comment.uuid !== uuid;
+    })
+
     res.end();
 });
 

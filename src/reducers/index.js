@@ -1,5 +1,5 @@
-import {combineReducers} from 'redux';
-import {ADD_COMMENT, UPDATE_COMMENT, RECEIVE_COMMENTS, REQUEST_COMMENTS, CLEAR_COMMENTS, SET_ERROR, CLEAR_ERROR} from '../actions';
+import { combineReducers } from 'redux';
+import { ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT, RECEIVE_COMMENTS, REQUEST_COMMENTS, CLEAR_COMMENTS, SET_ERROR, CLEAR_ERROR } from '../actions';
 
 const comments = (state = [], action) => {
     switch (action.type) {
@@ -15,13 +15,11 @@ const comments = (state = [], action) => {
 const isLoading = (state = false, action) => {
     switch (action.type) {
         case ADD_COMMENT:
-            return true;
         case UPDATE_COMMENT:
-            return true;
+        case DELETE_COMMENT:
         case REQUEST_COMMENTS:
             return true;
         case RECEIVE_COMMENTS:
-            return false;
         case SET_ERROR:
             return false;
         default:
@@ -30,7 +28,7 @@ const isLoading = (state = false, action) => {
 }
 
 const lastUpdate = (state = new Date(), action) => {
-    switch(action.type) {
+    switch (action.type) {
         case RECEIVE_COMMENTS:
             return action.lastUpdate;
         default:
