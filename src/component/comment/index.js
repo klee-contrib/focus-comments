@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './style.scss';
 import moment from 'moment';
 import Input from '../input';
+import { deleteComment } from '../../actions';
 
 const propTypes = {
     uuid: PropTypes.string.isRequired,
@@ -37,9 +38,12 @@ class Comment extends Component {
     }
 
     render() {
-        const { msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, showAvatar, timeDisplay, dateTimeFormat, ...otherProps } = this.props;
+        const { msg, author, authorDisplayName, creationDate, currentUserId, lastModified, userPictureResolver, texts, showAvatar, timeDisplay, dateTimeFormat, canDelete, ...otherProps } = this.props;
+        const { dispatch, apiRootUrl, concept, conceptId, uuid } = otherProps;
+
         const { isEditing } = this.state;
         const isMine = currentUserId === author;
+
         return (
             <div data-focus='comment' data-editing={isEditing}>
                 {showAvatar &&
@@ -53,20 +57,28 @@ class Comment extends Component {
                         <div data-focus='name'>
                             <b>{authorDisplayName}</b>
                         </div>
-                        {isMine &&
-                            <div data-focus='edit'>
+                        {isMine && (
+                            <div data-focus='actions'>
                                 <a data-focus='toggle' onClick={() => { this.setState({ isEditing: !this.state.isEditing }) }}>
                                     {isEditing ? texts.cancel : texts.edit}
                                 </a>
+                                {canDelete && (
+                                    <a data-focus='toggle' onClick={() => dispatch(deleteComment(concept, conceptId, uuid, apiRootUrl))}>
+                                        {texts.delete}
+                                    </a>
+                                )}
                             </div>
-                        }
+                        )}
                         <div data-focus='date'>
                             {timeDisplay === 'ago' && moment(creationDate).fromNow()}
                             {timeDisplay === 'dateTime' && moment(creationDate).format(dateTimeFormat)}
                         </div>
                     </div>
                     <div data-focus='body'>
-                        {isMine && isEditing ? <Input inputType='update' texts={{ ...texts, placeholder: '' }} {...{ author, authorDisplayName, creationDate, ...otherProps }} ref='edit' value={msg} /> : <div dangerouslySetInnerHTML={{ __html: msg.replace(/\n/g, '<br>') }}></div>}
+                        {isMine && isEditing
+                            ? (<Input inputType='update' texts={{ ...texts, placeholder: '' }} {...{ author, authorDisplayName, creationDate, ...otherProps }} ref='edit' value={msg} />)
+                            : (<div dangerouslySetInnerHTML={{ __html: msg.replace(/\n/g, '<br>') }}></div>)
+                        }
                     </div>
                     <div className='separator'></div>
                 </div>

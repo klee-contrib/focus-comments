@@ -12,7 +12,7 @@
     }
 
     &:hover {
-        [data-focus='content'] [data-focus='head'] [data-focus='edit'] {
+        [data-focus='content'] [data-focus='head'] [data-focus='actions'] {
             display: inline-block;
         }
     }
@@ -56,13 +56,14 @@
                 font-size: 1.1em;
             }
 
-            [data-focus='edit'] {
+            [data-focus='actions'] {
                 flex: 1;
                 margin-left: 10px;
 
                 a {
                     color: #3f51b5;
                     cursor: pointer;
+                    margin-right: 10px;
                 }
                 display: none;
             }

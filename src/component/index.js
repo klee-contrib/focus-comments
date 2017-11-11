@@ -13,10 +13,13 @@ const propTypes = {
     concept: PropTypes.string.isRequired,
     conceptId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     userPictureResolver: PropTypes.func.isRequired,
+    currentUserId: PropTypes.number,
+    canDelete: PropTypes.bool,
     texts: PropTypes.shape({
         placeholder: PropTypes.string.isRequired,
         send: PropTypes.string.isRequired,
         edit: PropTypes.string.isRequired,
+        delete: PropTypes.string.isRequired,
         cancel: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         singleComment: PropTypes.string.isRequired,
@@ -35,10 +38,13 @@ const propTypes = {
 
 const defaultProps = {
     userPictureResolver: userId => `./x/account/api/accounts/${userId}/photo`,
+    currentUserId: undefined,
+    canDelete: false,
     texts: {
         placeholder: 'Leave a comment...',
         send: 'Send',
         edit: 'Edit',
+        delete: 'Delete',
         cancel: 'Cancel',
         title: 'Comments',
         singleComment: 'comment',
