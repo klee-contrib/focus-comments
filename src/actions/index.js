@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch';
 
 // Single comment actions
 export const ADD_COMMENT = 'ADD_COMMENT';
