@@ -1,0 +1,38 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = createNotificationStore;
+
+var _redux = require('redux');
+
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _reduxLogger = require('redux-logger');
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+var _reduxDevtools = require('redux-devtools');
+
+var _reducers = require('../reducers');
+
+var _reducers2 = _interopRequireDefault(_reducers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var loggerMiddleware = (0, _reduxLogger2.default)();
+
+console.log('Env', __DEV__ ? 'dev' : 'prod');
+
+var createStoreWithMiddleware = __DEV__ ? (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware), (0, _reduxDevtools.devTools)(),
+// Lets you write ?debug_session=<name> in address bar to persist debug sessions
+(0, _reduxDevtools.persistState)(window.location.href.match(/[?&]debug_session=([^&]+)\b/)))(_redux.createStore) : (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+
+function createNotificationStore(initialState) {
+    return createStoreWithMiddleware(_reducers2.default, initialState);
+}
+module.exports = exports['default'];
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbImNyZWF0ZU5vdGlmaWNhdGlvblN0b3JlIiwibG9nZ2VyTWlkZGxld2FyZSIsImNvbnNvbGUiLCJsb2ciLCJfX0RFVl9fIiwiY3JlYXRlU3RvcmVXaXRoTWlkZGxld2FyZSIsIndpbmRvdyIsImxvY2F0aW9uIiwiaHJlZiIsIm1hdGNoIiwiaW5pdGlhbFN0YXRlIl0sIm1hcHBpbmdzIjoiOzs7OztrQkFvQndCQSx1Qjs7QUFwQnhCOztBQUNBOzs7O0FBQ0E7Ozs7QUFDQTs7QUFDQTs7Ozs7O0FBRUEsSUFBTUMsbUJBQW1CLDRCQUF6Qjs7QUFFQUMsUUFBUUMsR0FBUixDQUFZLEtBQVosRUFBbUJDLFVBQVUsS0FBVixHQUFrQixNQUFyQzs7QUFFQSxJQUFNQyw0QkFBNEJELFVBQVUsb0JBQ3hDLGtEQUVJSCxnQkFGSixDQUR3QyxFQUt4Qyw4QkFMd0M7QUFNeEM7QUFDQSxpQ0FBYUssT0FBT0MsUUFBUCxDQUFnQkMsSUFBaEIsQ0FBcUJDLEtBQXJCLENBQTJCLDZCQUEzQixDQUFiLENBUHdDLHFCQUFWLEdBUWpCLHFFQVJqQjs7QUFVZSxTQUFTVCx1QkFBVCxDQUFpQ1UsWUFBakMsRUFBK0M7QUFDMUQsV0FBT0wsOENBQXVDSyxZQUF2QyxDQUFQO0FBQ0giLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBjb21wb3NlLCBjcmVhdGVTdG9yZSwgYXBwbHlNaWRkbGV3YXJlIH0gZnJvbSAncmVkdXgnO1xuaW1wb3J0IHRodW5rTWlkZGxld2FyZSBmcm9tICdyZWR1eC10aHVuayc7XG5pbXBvcnQgY3JlYXRlTG9nZ2VyIGZyb20gJ3JlZHV4LWxvZ2dlcic7XG5pbXBvcnQgeyBkZXZUb29scywgcGVyc2lzdFN0YXRlIH0gZnJvbSAncmVkdXgtZGV2dG9vbHMnO1xuaW1wb3J0IHJvb3RSZWR1Y2VyIGZyb20gJy4uL3JlZHVjZXJzJztcblxuY29uc3QgbG9nZ2VyTWlkZGxld2FyZSA9IGNyZWF0ZUxvZ2dlcigpO1xuXG5jb25zb2xlLmxvZygnRW52JywgX19ERVZfXyA/ICdkZXYnIDogJ3Byb2QnKTtcblxuY29uc3QgY3JlYXRlU3RvcmVXaXRoTWlkZGxld2FyZSA9IF9fREVWX18gPyBjb21wb3NlKFxuICAgIGFwcGx5TWlkZGxld2FyZShcbiAgICAgICAgdGh1bmtNaWRkbGV3YXJlLFxuICAgICAgICBsb2dnZXJNaWRkbGV3YXJlXG4gICAgKSxcbiAgICBkZXZUb29scygpLFxuICAgIC8vIExldHMgeW91IHdyaXRlID9kZWJ1Z19zZXNzaW9uPTxuYW1lPiBpbiBhZGRyZXNzIGJhciB0byBwZXJzaXN0IGRlYnVnIHNlc3Npb25zXG4gICAgcGVyc2lzdFN0YXRlKHdpbmRvdy5sb2NhdGlvbi5ocmVmLm1hdGNoKC9bPyZdZGVidWdfc2Vzc2lvbj0oW14mXSspXFxiLykpXG4pKGNyZWF0ZVN0b3JlKSA6IGFwcGx5TWlkZGxld2FyZSh0aHVua01pZGRsZXdhcmUpKGNyZWF0ZVN0b3JlKTtcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gY3JlYXRlTm90aWZpY2F0aW9uU3RvcmUoaW5pdGlhbFN0YXRlKSB7XG4gICAgcmV0dXJuIGNyZWF0ZVN0b3JlV2l0aE1pZGRsZXdhcmUocm9vdFJlZHVjZXIsIGluaXRpYWxTdGF0ZSk7XG59XG4iXX0=

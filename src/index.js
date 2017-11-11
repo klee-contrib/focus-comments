@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Comments from './component';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
-const infos = require(`${__PACKAGE_JSON_PATH__}package.json`);
+// const infos = require(`${__PACKAGE_JSON_PATH__}package.json`);
 
 const store = createStore();
 
@@ -35,6 +35,6 @@ function FocusComments(props) {
         </div>
     );
 }
-FocusComments.VERSION = infos.version;
+FocusComments.VERSION = '';//infos.version;
 
 export default FocusComments;
